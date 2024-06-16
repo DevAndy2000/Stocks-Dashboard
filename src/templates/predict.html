@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Stock Prediction for {{ symbol }}</h1>
+
+        <!-- Predicted Prices Table -->
+        <div id="predicted-prices">
+            <h2>Predicted Prices for Next Week</h2>
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Predicted Closing Price</th>
+                </tr>
+                {% for i in range(next_week_dates|length) %}
+                    <tr>
+                        <td>{{ next_week_dates[i] }}</td>
+                        <td>${{ next_prices[i] }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <a href="/">Back to Home</a>
+    </div>
+</body>
+</html>

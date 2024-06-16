@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Analysis</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Stock Analysis for {{ symbol }}</h1>
+
+        <!-- Prediction Button -->
+        <form action="/predict" method="post">
+            <input type="hidden" name="symbol" value="{{ symbol }}">
+            <button type="submit">Predict Next Week's Prices</button>
+        </form>
+
+        <!-- Plot -->
+        <div id="plot-container">
+            {{ analysis_results.plot | safe }}
+        </div>
+
+        <!-- Summary Statistics -->
+        <div id="summary-stats">
+            <h2>Summary Statistics</h2>
+            <p>Mean: {{ analysis_results.mean }}</p>
+            <p>Standard Deviation: {{ analysis_results.std }}</p>
+        </div>
+
+        <!-- Trend Analysis -->
+        <div id="trend">
+            <h2>Trend Analysis</h2>
+            <p>The stock trend is {{ analysis_results.trend }}.</p>
+        </div>
+
+        <!-- Volume Data -->
+        <div id="volume">
+            <h2>Volume Data</h2>
+            <p>The volume data for the selected stock:</p>
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Volume</th>
+                </tr>
+                {% for date, volume in analysis_results.volume %}
+                    <tr>
+                        <td>{{ date }}</td>
+                        <td>{{ volume }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <a href="/">Back to Home</a>
+    </div>
+</body>
+</html>
